@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Art Exhibition - Graphnets</title>
+    <title>Arta Rețelelor - 4PCAN</title>
     <style>
         * {
             margin: 0;
@@ -27,21 +27,63 @@
         header {
             text-align: center;
             margin-bottom: 50px;
-            padding: 40px 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 50px 30px;
+            background: linear-gradient(135deg, #2E5BBA 0%, #1E4A8C 100%);
             color: white;
-            border-radius: 10px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,193,7,0.15) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.1; }
         }
 
         h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
         }
 
         .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .event-details {
+            position: relative;
+            z-index: 2;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .event-details p {
+            margin: 5px 0;
+        }
+
+        .free-entry {
+            color: #FFC107;
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-top: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
         .gallery {
@@ -53,31 +95,61 @@
 
         .artwork {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(46, 91, 186, 0.15);
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
         }
 
         .artwork:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(46, 91, 186, 0.25);
+            border-color: #FFC107;
+        }
+
+        .artwork::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,193,7,0.1), transparent);
+            transition: left 0.6s ease;
+            z-index: 1;
+        }
+
+        .artwork:hover::before {
+            left: 100%;
         }
 
         .artwork-image {
             width: 100%;
-            height: 300px;
-            background-color: #e0e0e0;
-            background-image: linear-gradient(45deg, #f0f0f0 25%, transparent 25%, transparent 75%, #f0f0f0 75%), 
-                              linear-gradient(45deg, #f0f0f0 25%, transparent 25%, transparent 75%, #f0f0f0 75%);
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px;
+            height: 320px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #666;
+            color: #6c757d;
             font-style: italic;
-            border-bottom: 1px solid #eee;
+            border-bottom: 3px solid #FFC107;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .artwork-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(46, 91, 186, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 193, 7, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(46, 91, 186, 0.05) 0%, transparent 50%);
         }
 
         .artwork-image img {
@@ -85,42 +157,100 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            position: relative;
+            z-index: 2;
         }
 
         .artwork-info {
-            padding: 25px;
+            padding: 30px;
+            position: relative;
+            z-index: 2;
         }
 
         .artwork-title {
-            font-size: 1.5rem;
-            color: #2c3e50;
-            margin-bottom: 8px;
+            font-size: 1.6rem;
+            color: #2E5BBA;
+            margin-bottom: 12px;
             font-weight: bold;
+            position: relative;
+        }
+
+        .artwork-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #FFC107, #FFD54F);
+            transition: width 0.4s ease;
+        }
+
+        .artwork:hover .artwork-title::after {
+            width: 100%;
         }
 
         .artwork-details {
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
+            color: #6c757d;
+            font-size: 0.95rem;
+            margin-bottom: 18px;
             font-style: italic;
+            padding: 10px 15px;
+            background: rgba(46, 91, 186, 0.08);
+            border-left: 4px solid #FFC107;
+            border-radius: 6px;
         }
 
         .artwork-description {
             color: #555;
             line-height: 1.7;
+            font-size: 1rem;
         }
 
         footer {
             text-align: center;
-            padding: 40px 0;
-            background-color: #34495e;
+            padding: 50px 30px;
+            background: linear-gradient(135deg, #2E5BBA 0%, #1E4A8C 100%);
             color: white;
-            border-radius: 10px;
+            border-radius: 15px;
             margin-top: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 70%, rgba(255,193,7,0.1) 0%, transparent 50%);
         }
 
         .contact-info {
             font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+            line-height: 1.8;
+        }
+
+        .contact-info p {
+            margin: 10px 0;
+        }
+
+        .contact-info a {
+            color: #FFC107;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .contact-info a:hover {
+            color: #FFD54F;
+            text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+            border-bottom-color: #FFC107;
         }
 
         @media (max-width: 768px) {
@@ -129,11 +259,15 @@
             }
             
             h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
             
             .container {
                 padding: 10px;
+            }
+
+            header {
+                padding: 30px 20px;
             }
         }
     </style>
@@ -141,8 +275,14 @@
 <body>
     <div class="container">
         <header>
-            <h1>Art Exhibition</h1>
-            <p class="subtitle">A Collection of Contemporary Works | [Date] | [Location]</p>
+            <h1>ARTA REȚELELOR</h1>
+            <p class="subtitle">Cum cetățenii, comunitatea și datele schimbă paradigma în prevenția primară a cancerului</p>
+            <div class="event-details">
+                <p><strong>9-11 Septembrie 2024</strong></p>
+                <p>Începând cu ora 10:00</p>
+                <p>Căminul Cultural Lerești</p>
+                <p class="free-entry">INTRAREA LIBERĂ</p>
+            </div>
         </header>
 
         <div class="gallery">
@@ -150,15 +290,15 @@
             <div class="artwork">
                 <div class="artwork-image">
                     <!-- Replace with: <img src="path-to-your-image.jpg" alt="Artwork Title"> -->
-                    [Upload your painting image here]
+                    [Upload your digital story image here]
                 </div>
                 <div class="artwork-info">
-                    <h3 class="artwork-title">Painting Title 1</h3>
-                    <p class="artwork-details">Oil on Canvas, 24" x 36", 2024</p>
+                    <h3 class="artwork-title">Poveste Digitală 1</h3>
+                    <p class="artwork-details">Video/Prezentare interactivă, 2024</p>
                     <p class="artwork-description">
-                        Add your description of this painting here. Describe the inspiration, 
-                        technique, or story behind the work. This helps viewers connect with 
-                        your art on a deeper level.
+                        Descrierea primei povești digitale din Living Lab Lerești. 
+                        Explicați cum această poveste ilustrează conexiunea dintre 
+                        comunitate și prevenția cancerului.
                     </p>
                 </div>
             </div>
@@ -166,14 +306,15 @@
             <!-- Artwork 2 -->
             <div class="artwork">
                 <div class="artwork-image">
-                    [Upload your painting image here]
+                    [Upload your digital story image here]
                 </div>
                 <div class="artwork-info">
-                    <h3 class="artwork-title">Painting Title 2</h3>
-                    <p class="artwork-details">Acrylic on Canvas, 18" x 24", 2024</p>
+                    <h3 class="artwork-title">Poveste Digitală 2</h3>
+                    <p class="artwork-details">Documentar/Prezentare, 2024</p>
                     <p class="artwork-description">
-                        Description of your second painting. Share what makes this piece 
-                        special and any interesting details about its creation.
+                        A doua poveste digitală care explorează rolul datelor 
+                        în schimbarea paradigmei de prevenție. Adăugați detalii 
+                        specifice despre această prezentare.
                     </p>
                 </div>
             </div>
@@ -181,14 +322,14 @@
             <!-- Artwork 3 -->
             <div class="artwork">
                 <div class="artwork-image">
-                    [Upload your painting image here]
+                    [Upload your digital story image here]
                 </div>
                 <div class="artwork-info">
-                    <h3 class="artwork-title">Painting Title 3</h3>
-                    <p class="artwork-details">Watercolor, 16" x 20", 2024</p>
+                    <h3 class="artwork-title">Poveste Digitală 3</h3>
+                    <p class="artwork-details">Instalație interactivă, 2024</p>
                     <p class="artwork-description">
-                        Tell the story of this artwork. What inspired you to create it? 
-                        What techniques did you use?
+                        Descrierea celei de-a treia povești digitale și impactul 
+                        ei asupra comunității locale din Lerești.
                     </p>
                 </div>
             </div>
@@ -196,13 +337,14 @@
             <!-- Artwork 4 -->
             <div class="artwork">
                 <div class="artwork-image">
-                    [Upload your painting image here]
+                    [Upload your digital story image here]
                 </div>
                 <div class="artwork-info">
-                    <h3 class="artwork-title">Painting Title 4</h3>
-                    <p class="artwork-details">Mixed Media, 20" x 30", 2024</p>
+                    <h3 class="artwork-title">Poveste Digitală 4</h3>
+                    <p class="artwork-details">Multimedia/Animație, 2024</p>
                     <p class="artwork-description">
-                        Describe this painting and what you want viewers to take away from it.
+                        Explicați această poveste digitală și modul în care 
+                        contribuie la obiectivele proiectului 4PCAN.
                     </p>
                 </div>
             </div>
@@ -210,13 +352,14 @@
             <!-- Artwork 5 -->
             <div class="artwork">
                 <div class="artwork-image">
-                    [Upload your painting image here]
+                    [Upload your digital story image here]
                 </div>
                 <div class="artwork-info">
-                    <h3 class="artwork-title">Painting Title 5</h3>
-                    <p class="artwork-details">Oil on Canvas, 22" x 28", 2024</p>
+                    <h3 class="artwork-title">Poveste Digitală 5</h3>
+                    <p class="artwork-details">Prezentare interactivă, 2024</p>
                     <p class="artwork-description">
-                        Share the inspiration and story behind this piece.
+                        Descrierea acestei povești și conexiunea ei cu rețelele 
+                        comunitare și inovația în sănătate.
                     </p>
                 </div>
             </div>
@@ -224,13 +367,14 @@
             <!-- Artwork 6 -->
             <div class="artwork">
                 <div class="artwork-image">
-                    [Upload your painting image here]
+                    [Upload your digital story image here]
                 </div>
                 <div class="artwork-info">
-                    <h3 class="artwork-title">Painting Title 6</h3>
-                    <p class="artwork-details">Acrylic on Wood Panel, 12" x 16", 2024</p>
+                    <h3 class="artwork-title">Poveste Digitală 6</h3>
+                    <p class="artwork-details">Video documentar, 2024</p>
                     <p class="artwork-description">
-                        Describe what makes this painting unique and meaningful to you.
+                        Povestea comunității din Lerești și transformarea 
+                        prin tehnologie și colaborare.
                     </p>
                 </div>
             </div>
@@ -238,13 +382,14 @@
             <!-- Artwork 7 -->
             <div class="artwork">
                 <div class="artwork-image">
-                    [Upload your painting image here]
+                    [Upload your digital story image here]
                 </div>
                 <div class="artwork-info">
-                    <h3 class="artwork-title">Painting Title 7</h3>
-                    <p class="artwork-details">Oil on Canvas, 30" x 40", 2024</p>
+                    <h3 class="artwork-title">Poveste Digitală 7</h3>
+                    <p class="artwork-details">Prezentare multimedia, 2024</p>
                     <p class="artwork-description">
-                        Tell viewers about this artwork - its meaning, process, or significance.
+                        Impactul tehnologiei și datelor asupra sănătății 
+                        comunitare și prevenției cancerului.
                     </p>
                 </div>
             </div>
@@ -252,13 +397,14 @@
             <!-- Artwork 8 -->
             <div class="artwork">
                 <div class="artwork-image">
-                    [Upload your painting image here]
+                    [Upload your digital story image here]
                 </div>
                 <div class="artwork-info">
-                    <h3 class="artwork-title">Painting Title 8</h3>
-                    <p class="artwork-details">Pastel on Paper, 14" x 18", 2024</p>
+                    <h3 class="artwork-title">Poveste Digitală 8</h3>
+                    <p class="artwork-details">Instalație digitală, 2024</p>
                     <p class="artwork-description">
-                        Complete your gallery with a description of this final piece.
+                        Ultima poveste din această colecție, sintetizând 
+                        învățămintele și viziunea pentru viitor.
                     </p>
                 </div>
             </div>
@@ -266,9 +412,10 @@
 
         <footer>
             <div class="contact-info">
-                <p><strong>Artist Name</strong></p>
-                <p>Email: your-email@example.com | Phone: (555) 123-4567</p>
-                <p>Follow on Instagram: @yourarthandle</p>
+                <p><strong>4PCAN - Povești Digitale din Living Lab Lerești</strong></p>
+                <p>Pentru mai multe informații:</p>
+                <p><a href="https://4p-can.eu/ecosisteme-vii/" target="_blank">4p-can.eu/ecosisteme-vii</a></p>
+                <p>Un eveniment despre comunitate, inovație și prevenție</p>
             </div>
         </footer>
     </div>
